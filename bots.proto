@@ -1,0 +1,54 @@
+syntax = "proto3";
+
+option go_package = "./hub";
+
+service BotsService {
+  rpc GetBots (GetBotsRequest) returns (GetBotsReply);
+  rpc GetBot (GetBotRequest) returns (GetBotReply);
+  rpc UpdateBot (UpdateBotRequest) returns (UpdateBotReply);
+  rpc CreateBot (CreateBotRequest) returns (CreateBotReply);
+}
+
+message GetBotsRequest {
+  repeated int32 hidden = 1;
+  int32 sort_by = 3;
+}
+
+message GetBotsReply {
+  int32 count = 1;
+  repeated GetBotReply bots = 2;
+}
+
+message GetBotRequest {
+  int32 bot_id = 1;
+}
+
+message GetBotReply {
+  int32 bot_id = 1;
+  string name = 2;
+  string about = 3;
+  string description = 4;
+  repeated int32 admins = 5;
+}
+
+message UpdateBotRequest {
+  int32 bot_id = 1;
+  optional string name = 2;
+  optional string about = 3;
+  optional string description = 4;
+}
+
+message UpdateBotReply {
+  bool result = 1;
+  optional string error_message = 2;
+}
+
+message CreateBotRequest {
+  int32 bot_id = 1;
+  string platform = 2;
+}
+
+message CreateBotReply {
+  bool result = 1;
+  optional string error_message = 2;
+}
